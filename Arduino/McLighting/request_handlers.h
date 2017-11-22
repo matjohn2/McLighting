@@ -18,7 +18,7 @@ void getArgs() {
   }
 
   ws2812fx_mode = constrain(server.arg("m").toInt(), 0, strip.getModeCount()-1);
-    
+  
   main_color.red = constrain(main_color.red, 0, 255);
   main_color.green = constrain(main_color.green, 0, 255);
   main_color.blue = constrain(main_color.blue, 0, 255);
@@ -79,7 +79,7 @@ void handleSetSingleLED(uint8_t * mypayload, uint8_t firstChar = 1) {
     ledstates[led].green = ((rgb >> 8)  & 0xFF);
     ledstates[led].blue =  ((rgb >> 0)  & 0xFF);
     DBG_OUTPUT_PORT.printf("WS: Set single led [%u] to [%u] [%u] [%u] (%s)!\n", led, ledstates[led].red, ledstates[led].green, ledstates[led].blue, mypayload);
-     
+    
     for (uint8_t i = 0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, ledstates[i].red, ledstates[i].green, ledstates[i].blue);
       //DBG_OUTPUT_PORT.printf("[%u]--[%u] [%u] [%u] [%u] LED index!\n", rgb, i, ledstates[i].red, ledstates[i].green, ledstates[i].blue);
@@ -322,7 +322,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         DBG_OUTPUT_PORT.println(json);
         webSocket.sendTXT(num, json);
       }
-     
+      
       // ~ ==> Get WS2812 modes.
       if (payload[0] == '~') {
         DBG_OUTPUT_PORT.printf("Get WS2812 modes.");
@@ -331,7 +331,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         DBG_OUTPUT_PORT.println(json);
         webSocket.sendTXT(num, json);
       }
-     
+      
       // / ==> Set WS2812 mode.
       if (payload[0] == '/') {
         handleSetWS2812FXMode(payload);
